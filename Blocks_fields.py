@@ -30,13 +30,13 @@ def check_water():
 	
 def decision(x,y, field):
 	if field == "Carrots":
-		carrot_field(x, y, 6, 6)
+		carrot_field(x, y, 9, 9)
 	elif field == "Grass":
-		grass_field(x, y, 6, 6)
+		grass_field(x, y, 9, 9)
 	elif field == "Trees1":
-		tree_field(x, y, 12, 4)
+		tree_field(x, y, 18, 4)
 	else:
-		tree_field(x, y, 4, 16)
+		tree_field(x, y, 4, 22)
 				
 #def check_field(i, j):
 #	block_i = i // 6 # 6x6 Blocks and trees will wrap arround.
@@ -172,8 +172,8 @@ def tree_field(x, y, w, h):
 #-------------------------------------------------
 	
 
-	
-BLOCKS = {"Carrots" : (0,0), "Cactus" : (6,0), "Pumpkins" : (6,6), "Grass" : (0, 6), "Trees1" : (0, 12), "Trees2" : (12, 0)}
+clear()	
+BLOCKS = {"Carrots" : (0,0), "Cactus" : (9,0), "Pumpkins" : (9,9), "Grass" : (0, 9), "Trees1" : (0, 18), "Trees2" : (18, 0)}
 pumpkin_visits = 0
 dead_pumpkins = []
 cactus_visits = 0
@@ -182,22 +182,22 @@ while True:
 	for key in BLOCKS:
 		value = BLOCKS[key]
 		if key == "Pumpkins":
-			dead_pumpkins = pumpkin_field(value[0], value[1], 6, 6, pumpkin_visits, dead_pumpkins)
+			dead_pumpkins = pumpkin_field(value[0], value[1], 9, 9, pumpkin_visits, dead_pumpkins)
 			if dead_pumpkins == []:
 				go_to(value[0], value[1])
 				harv()
 				pumpkin_visits = 0
-				dead_pumpkins = pumpkin_field(value[0], value[1], 6, 6, pumpkin_visits, dead_pumpkins)
+				dead_pumpkins = pumpkin_field(value[0], value[1], 9, 9, pumpkin_visits, dead_pumpkins)
 				pumpkin_visits = 1
 			else:
 				pumpkin_visits += 1
 		elif key == "Cactus":
-			cactus_sorted = cactus_field(value[0], value[1], 6, 6, cactus_visits, cactus_sorted)
+			cactus_sorted = cactus_field(value[0], value[1], 9, 9, cactus_visits, cactus_sorted)
 			if cactus_sorted:
 				go_to(value[0], value[1])
 				harv()
 				cactus_visits = 0
-				cactus_field(value[0], value[1], 6, 6, cactus_visits, cactus_sorted)
+				cactus_field(value[0], value[1], 9, 9, cactus_visits, cactus_sorted)
 				cactus_sorted = False
 				cactus_visits += 1
 			else:
