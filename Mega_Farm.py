@@ -4,9 +4,9 @@ from utilities import harv, check_water, check_soil
 def main_drone():
 	v = BLOCKS["Grass"]
 	x = v[0] 
-	y = v[1] + 5
-	w = 9 # width
-	h = 4 # height
+	y = v[1] + 6
+	w = 12 # width
+	h = 6 # height
 	for j in range(y , y + h):
 		for i in range(x, x + w):
 			go_to(i, j)
@@ -18,8 +18,8 @@ def grass_drone():
 		v = BLOCKS["Grass"]
 		x = v[0] 
 		y = v[1]
-		w = 9 # width
-		h = 5 # height 
+		w = 12 # width
+		h = 6 # height 
 		for j in range(y , y + h):
 			for i in range(x, x + w):
 				go_to(i, j)
@@ -30,8 +30,8 @@ def carrot_drone():
 	v = BLOCKS["Carrots"]
 	x = v[0]
 	y = v[1]
-	w = 9 # width
-	h = 9 # height 
+	w = 12 # width
+	h = 12 # height 
 	while True:	
 		for j in range(y, y + h):
 			for i in range(x, x + w):
@@ -55,19 +55,19 @@ def tree_strip(x, y, w, h):
 def tree1_drone():
 	v = BLOCKS["Trees1"]
 	while True:
-		tree_strip(v[0], v[1], 18, 4)
+		tree_strip(v[0], v[1], 24, 8)
 
 def tree2_drone():
 	v = BLOCKS["Trees2"]
 	while True:
-		tree_strip(v[0], v[1], 4, 22)
+		tree_strip(v[0], v[1], 8, 32)
 	
 def pumpkin_drone():
 	v = BLOCKS["Pumpkins"]
 	x = v[0]
 	y = v[1]
-	w = 9 # width
-	h = 9 # height
+	w = 12 # width
+	h = 12 # height
 	def plant_entire_field(x, y, w, h):
 		for j in range(y, y + h):
 			for i in range(x, x + w):
@@ -114,8 +114,8 @@ def cactus_drone():
 	v = BLOCKS["Cactus"]
 	x = v[0]
 	y = v[1]
-	w = 9 # width
-	h = 9 # height
+	w = 12 # width
+	h = 12 # height
 	def plant_entire_field(x, y, w, h):
 		for j in range(y, y + h):
 			for i in range(x, x + w):
@@ -174,9 +174,9 @@ def asign_drone(field):
 		spawn_drone(tree1_drone)
 	else:
 		spawn_drone(tree2_drone)
-
+clear()
 	
-BLOCKS = {"Carrots" : (0,0), "Cactus" : (9,0), "Pumpkins" : (9,9), "Grass" : (0, 9), "Trees1" : (0, 18), "Trees2" : (18, 0)}
+BLOCKS = {"Carrots" : (0,0), "Cactus" : (12,0), "Pumpkins" : (12,12), "Grass" : (0, 12), "Trees1" : (0, 24), "Trees2" : (24, 0)}
 go_to(0,0)
 drone_count = 0
 for key in BLOCKS:
@@ -186,7 +186,7 @@ for key in BLOCKS:
 	go_to(value[0], value[1])
 	asign_drone(key)
 	
-go_to(0, 14)
+go_to(0, 18)
 while True:
 	main_drone()
 
