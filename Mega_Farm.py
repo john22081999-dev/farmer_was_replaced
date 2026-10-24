@@ -1,6 +1,31 @@
 from movement import go_to
 from utilities import harv, check_water, check_soil
 
+def main_drone():
+	v = BLOCKS["Grass"]
+	x = v[0] 
+	y = v[1] + 5
+	w = 9 # width
+	h = 4 # height
+	for j in range(y , y + h):
+		for i in range(x, x + w):
+			go_to(i, j)
+			harv()
+			check_water()
+			
+def grass_drone():
+	while True:	
+		v = BLOCKS["Grass"]
+		x = v[0] 
+		y = v[1]
+		w = 9 # width
+		h = 5 # height 
+		for j in range(y , y + h):
+			for i in range(x, x + w):
+				go_to(i, j)
+				harv()
+				check_water()
+			
 def carrot_drone():
 	v = BLOCKS["Carrots"]
 	x = v[0]
@@ -16,38 +41,26 @@ def carrot_drone():
 				plant(Entities.Carrot)
 				check_water()
 			
-def tree_drone(): 
-	# 2 blocks of trees (L shaped field) 
-	v1 = BLOCKS["Trees1"]
-	v2 = BLOCKS["Trees2"]
-	x1 = v1[0]
-	y1 = v1[1]
-	x2 = v2[0]
-	y2 = v2[1]
-	h1 = 4
-	w1 = 18
-	h2 = 22
-	w2 = 4
+def tree_strip(x, y, w, h):
+	for j in range(y, y + h):
+		for i in range(x, x + w):
+			go_to(i, j)
+			harv()
+			if (i + j) % 2 == 1:
+				plant(Entities.Tree)
+				check_water()
+			else:
+				plant(Entities.Bush)
+
+def tree1_drone():
+	v = BLOCKS["Trees1"]
 	while True:
-		# 2 loops 1 for each block od trees
-		for j in range(y1, y1 + h1):
-			for i in range(x1, x1 + w1):
-				go_to(i, j)
-				harv()
-				if (i % 2 == 1 and j % 2 == 0) or (i % 2 == 0 and j % 2 == 1):
-					plant(Entities.Tree)
-					check_water()
-				else:
-					plant(Entities.Bush)
-		for j in range(y2, y2 + h2):
-			for i in range(x2, x2 + w2):
-				go_to(i, j)
-				harv()
-				if (i % 2 == 1 and j % 2 == 0) or (i % 2 == 0 and j % 2 == 1):
-					plant(Entities.Tree)
-					check_water()
-				else:
-					plant(Entities.Bush)
+		tree_strip(v[0], v[1], 18, 4)
+
+def tree2_drone():
+	v = BLOCKS["Trees2"]
+	while True:
+		tree_strip(v[0], v[1], 4, 22)
 	
 def pumpkin_drone():
 	v = BLOCKS["Pumpkins"]
@@ -156,9 +169,11 @@ def asign_drone(field):
 	elif field == "Pumpkins":
 		spawn_drone(pumpkin_drone)
 	elif field == "Grass":
-		pass
+		spawn_drone(grass_drone)
+	elif field == "Trees1":
+		spawn_drone(tree1_drone)
 	else:
-		spawn_drone(tree_drone)
+		spawn_drone(tree2_drone)
 
 	
 BLOCKS = {"Carrots" : (0,0), "Cactus" : (9,0), "Pumpkins" : (9,9), "Grass" : (0, 9), "Trees1" : (0, 18), "Trees2" : (18, 0)}
@@ -170,6 +185,11 @@ for key in BLOCKS:
 	value = BLOCKS[key]
 	go_to(value[0], value[1])
 	asign_drone(key)
+	
+go_to(0, 14)
+while True:
+	main_drone()
+
 
 
 	
